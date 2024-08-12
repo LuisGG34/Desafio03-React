@@ -35,7 +35,7 @@ const Register = () => {
             } else if (password !== confirmPassword) {
                 showAlert('Error', 'Las contraseñas no coinciden', 'error');
             } else {
-                showAlert(); // Aquí llamamos correctamente a la función showAlert
+                showAlert('¡Éxito!', 'Tu operación se completó exitosamente', 'success'); // Aquí llamamos correctamente a la función showAlert
             }
         }
     };

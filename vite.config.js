@@ -3,6 +3,6 @@ import react from '@vitejs/plugin-react'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: "/Desaf-o-01-React",
+  base: "/Desafio02-React",
   plugins: [react()],
 })

@@ -32,7 +32,7 @@ const Login= () => {
             } else if (password.length < 6) {
                 showAlert('Error', 'La contraseña debe tener al menos 6 caracteres', 'error');
             } else {
-                showAlert(); // Aquí llamamos correctamente a la función showAlert
+                showAlert('¡Éxito!', 'Tu operación se completó exitosamente', 'success'); // Aquí llamamos correctamente a la función showAlert
             }
         }
     };
