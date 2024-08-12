@@ -1,23 +1,40 @@
 import React, { useState } from 'react';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
 const Login= () => {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
 
-    const validateForm = () => {
-        const pattern =new RegExp (/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)
-        const emailValidate = pattern.test(email)
+    const MySwal = withReactContent(Swal);
 
-        if (!emailValidate) {
-            alert("The email entered is not valid");
-        } else if (email === "" || password === "") {
-            alert("Please complete all fields");
-        } else if (password.length < 6) {
-            alert("Password must be at least 6 characters");
+    // Función para mostrar alertas de éxito o error
+    const showAlert = (title, text, icon) => {
+        MySwal.fire({
+            title: title,
+            text: text,
+            icon: icon,
+            confirmButtonText: 'Aceptar'
+        });
+    };
+
+    const validateForm = (e) => {
+        e.preventDefault(); // Evita que el formulario se envíe y recargue la página
+
+        if (email === "" || password === "") {
+            showAlert('Error', 'Por favor completa todos los campos', 'error');
         } else {
-            alert("successful authentication");
-        }
+            const pattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            const emailValidate = pattern.test(email);
 
+            if (!emailValidate) {
+                showAlert('Error', 'El email ingresado no es válido', 'error');
+            } else if (password.length < 6) {
+                showAlert('Error', 'La contraseña debe tener al menos 6 caracteres', 'error');
+            } else {
+                showAlert(); // Aquí llamamos correctamente a la función showAlert
+            }
+        }
     };
 
     return (

@@ -1,48 +1,81 @@
 import React, { useState } from 'react';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
-const Register= () => {
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
-    const [confirmPassword, setConfirmPassword] = useState();
+const Register = () => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
 
-    const validateForm = () => {
-        const pattern =new RegExp (/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)
-        const emailValidate = pattern.test(email)
+    const MySwal = withReactContent(Swal);
 
-        if (!emailValidate) {
-            alert("The email entered is not valid")
-        } else {
-            if (email === "" || password === "" || confirmPassword === "") {
-                alert("Please complete all fields");
-            } else { if (password.length < 6) {
-                alert("Password must be at least 6 characters");
-            } else{
-                if (password !== confirmPassword) {
-                    alert("Passwords do not match");
-                } else {alert("successful authentication")}
-            }}
-            
-        }
-
+    // Función para mostrar alertas de éxito o error
+    const showAlert = (title, text, icon) => {
+        MySwal.fire({
+            title: title,
+            text: text,
+            icon: icon,
+            confirmButtonText: 'Aceptar'
+        });
     };
 
+    const validateForm = (e) => {
+        e.preventDefault(); // Evita que el formulario se envíe y recargue la página
+
+        if (email === "" || password === "" || confirmPassword === "") {
+            showAlert('Error', 'Por favor completa todos los campos', 'error');
+        } else {
+            const pattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            const emailValidate = pattern.test(email);
+
+            if (!emailValidate) {
+                showAlert('Error', 'El email ingresado no es válido', 'error');
+            } else if (password.length < 6) {
+                showAlert('Error', 'La contraseña debe tener al menos 6 caracteres', 'error');
+            } else if (password !== confirmPassword) {
+                showAlert('Error', 'Las contraseñas no coinciden', 'error');
+            } else {
+                showAlert(); // Aquí llamamos correctamente a la función showAlert
+            }
+        }
+    };
 
     return (
-        <form>
-        <h3>Form Register</h3>
-        <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Email address</label>
-            <input type="email" class="form-control" id="email" aria-describedby="emailHelp" value={email} onInput={(e) => setEmail(e.target.value)}/>
-        </div>
-        <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Password</label>
-            <input type="password" class="form-control" id="password" placeholder='*******' value={password} onInput={(e) => setPassword(e.target.value)}/>
-        </div>
-        <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Confirm Password</label>
-            <input type="password" class="form-control" id="confirmPass" placeholder='*******' value={confirmPassword} onInput={(e) => setConfirmPassword(e.target.value)}/>
-        </div>
-        <button onClick={validateForm} class="btn btn-primary">Send</button>
+        <form onSubmit={validateForm}>
+            <h3>Formulario de Registro</h3>
+            <div className="mb-3">
+                <label htmlFor="email" className="form-label">Dirección de correo electrónico</label>
+                <input 
+                    type="email" 
+                    className="form-control" 
+                    id="email" 
+                    value={email} 
+                    onInput={(e) => setEmail(e.target.value)} 
+                />
+            </div>
+            <div className="mb-3">
+                <label htmlFor="password" className="form-label">Contraseña</label>
+                <input 
+                    type="password" 
+                    className="form-control" 
+                    id="password" 
+                    placeholder="*******" 
+                    value={password} 
+                    onInput={(e) => setPassword(e.target.value)} 
+                />
+            </div>
+            <div className="mb-3">
+                <label htmlFor="confirmPass" className="form-label">Confirmar Contraseña</label>
+                <input 
+                    type="password" 
+                    className="form-control" 
+                    id="confirmPass" 
+                    placeholder="*******" 
+                    value={confirmPassword} 
+                    onInput={(e) => setConfirmPassword(e.target.value)} 
+                />
+            </div>
+            <button type="submit" className="btn btn-primary">Enviar</button>
         </form>
     );
 };
