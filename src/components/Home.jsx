@@ -1,31 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Header from "./Header";
-import CardPizza  from "./CardPizza";
+import CardPizza from "./CardPizza";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { pizzas } from '../utils/pizzas';
 
 const Home = () => {
+    const [listaPizzas, setListaPizzas] = useState(pizzas);
+    const [carrito, setCarrito ] = useState([]);
+
+    const agregarAlCarrito = (id) => {
+        const pizzaAgregada = listaPizzas.find((pizza) => pizza.id === id)
+
+        setCarrito([...carrito,pizzaAgregada]); //spread operator usar como base un arreglo y agregar elementos a el
+   
+    }
+
     return (
         <>
-        <Header/>
-        <div className="d-flex gap-2">
-        <CardPizza 
-        name="Napolitana"
-        price={5950}
-        ingredientes={["mozzarella", "tomates", "jamón", "orégano"]}
-        img="https://firebasestorage.googleapis.com/v0/b/apis-varias-mias.appspot.com/o/pizzeria%2Fpizza-1239077_640_cl.jpg?alt=media&token=6a9a33da-5c00-49d4-9080-784dcc87ec2c"
-        />
-        <CardPizza
-        name="Española"
-        price={6950}
-        ingredientes={["mozzarella", "gorgonzola", "parmesano", "provolone"]}
-        img="https://firebasestorage.googleapis.com/v0/b/apis-varias-mias.appspot.com/o/pizzeria%2Fcheese-164872_640_com.jpg?alt=media&token=18b2b821-4d0d-43f2-a1c6-8c57bc388fab"
-        />
-        <CardPizza
-        name="Pepperoni"
-        price={6950}
-        ingredientes={["mozzarella", "pepperoni", "orégano"]}
-        img="https://firebasestorage.googleapis.com/v0/b/apis-varias-mias.appspot.com/o/pizzeria%2Fpizza-1239077_640_com.jpg?alt=media&token=e7cde87a-08d5-4040-ac54-90f6c31eb3e3"
-        />
-        </div>
+            <Header/>
+            <div className="container mt-4">
+                <div className="row">
+                        {listaPizzas.map((pizza, index) => (
+                            <div className="col-md-4 mb-4">
+                                <CardPizza 
+                                    key ={`pg-principal-${pizza.id}-${index}`} 
+                                    pizza = {pizza}
+                                    agregarAlCarrito={agregarAlCarrito}
+                                    eliminarDelCarrito={eliminarDelCarrito}
+                                />
+                            </div>
+                        ))}
+                    
+                </div>
+            </div>
         </>
     );
 };

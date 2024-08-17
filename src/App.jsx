@@ -1,22 +1,27 @@
-import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Home from './components/Home';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
-import Login from './components/Login';
-import Register from './components/Register';
+import Footer from "./components/Footer";
+import Home from "./components/Home";
+import Navbar from "./components/Navbar";
+// import LoginPage from "./components/Login";
+// import RegisterPage from "./components/Register";
+import Cart from "./components/Cart";
 
-function App() {
-  return (
-  <>
-    <Navbar/>
-    {/*Home/>*/}
-    {/*<Register/>*/}
-    <Login/>
-    <Footer/>
-  </>
-  );
+
+
+const App = () => {
+return (
+  <div>
+  <Navbar/>
+  {/* <Home/>*/}
+  {/* <RegisterPage /> */}
+  {/* <LoginPage /> */}
+  <Cart/>
+  <Footer/>
+  </div>
+);
 };
 
 export default App;
+
+
+
   
