@@ -72,11 +72,20 @@ const Cart = () => {
         );
     };
     
+     // Calcular el total del carrito
+     const totalCarrito = carrito.reduce((total, pizza) => total + (pizza.price * pizza.cantidad), 0);
 
     return (
         <>  
             {/* Mostrar el título solo si el carrito tiene elementos */}
-            {carrito.length > 0 && <h3>Productos en tu carrito:</h3>}
+            {carrito.length > 0 && (
+
+            <>
+                <h3>Productos en tu carrito:</h3>
+                <h4>Total: ${totalCarrito.toFixed(2)}</h4> {/* Mostrar el total formateado */}
+                <button className="btn btn-primary">Pagar</button> {/* Botón Pagar */}
+            </>
+            )}
             
             <div className="container">
                 <div className="row">
